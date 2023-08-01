@@ -1,6 +1,6 @@
 const { Sequelize, STRING, INTEGER } = require("sequelize")
 
-const Database = new Sequelize("SouzaTreinamentos", "root", "@Manuel107584", {
+const Database = new Sequelize("SouzaTreinamentos", "root", "", {
     host: "localhost",
     dialect: "mysql",
     logging: false
