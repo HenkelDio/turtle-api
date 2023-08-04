@@ -30,7 +30,7 @@ const CompaniesModel = Database.define("companies", {
         type: STRING(11),
         allowNull: false
     }
-}, { timestamps: false });
+});
 
 Database.sync()
 

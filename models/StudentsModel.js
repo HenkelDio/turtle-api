@@ -8,30 +8,27 @@ const Students = Database.define("students", {
         autoIncrement: true,
         primaryKey: true
     },
-    user_company_id: {
+    student_company_id: {
         type: INTEGER,
-        references:{
-            model: require("./CompaniesModel.js"),
-            key: "company_id"
-        }
+        allowNull: false
     },
-    user_name: {
+    student_name: {
         type: STRING,
         allowNull: false
     },
-    user_register: {
+    student_register: {
         type: STRING(11),
         allowNull: false
     },
-    user_telephone: {
+    student_telephone: {
         type: STRING(11),
         allowNull: false
     },
-    user_email: {
+    student_email: {
         type: STRING,
         allowNull: false
     },
-    user_password: {
+    student_password: {
         type: STRING,
         allowNull: true,
         defaultValue: null
