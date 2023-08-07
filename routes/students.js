@@ -10,17 +10,21 @@ const Students = Router();
 Students.post("/createStudent", (req, res) => {
 
     let studentInfo = req.body;
-    
-    fieldsVerification(studentInfo, StudentsModel.getAttributes());
 
-    StudentsModel.findOrCreate({ where: { student_cpf: studentInfo.student_cpf }, defaults: studentInfo })
-        .then(studentData => {
-            let [studentInformation, created] = studentData;
-            res.status(201).json({ studentInformation, created });
-        })
-        .catch(err => {
-            res.status(500).json(err)
-        })
+    let verification = fieldsVerification(studentInfo, StudentsModel.getAttributes());
+
+    if (verification.error) {
+        res.status(500).json(verification);
+    } else {
+        StudentsModel.findOrCreate({ where: { student_cpf: studentInfo.student_cpf }, defaults: studentInfo })
+            .then(studentData => {
+                let [studentInformation, created] = studentData;
+                res.status(201).json({ studentInformation, created });
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    }
 
 });
 
