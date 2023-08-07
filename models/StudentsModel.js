@@ -16,11 +16,11 @@ const Students = Database.define("students", {
         type: STRING,
         allowNull: false
     },
-    student_register: {
+    student_cpf: {
         type: STRING(11),
         allowNull: false
     },
-    student_telephone: {
+    student_cellphone: {
         type: STRING(11),
         allowNull: false
     },
