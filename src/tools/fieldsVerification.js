@@ -18,7 +18,8 @@ module.exports = (requisitionType, information, modelAttributes) => {
                             return { error }
                         }
                     }
-                } else {
+                } else if (!modelAttributes[field].allowNull && !information[field]) {
+
                     error = `Field ${field} can't be empty or undefined`;
 
                     return { error };
