@@ -11,7 +11,7 @@ Students.post("/createStudent", (req, res) => {
 
     let studentInfo = req.body;
 
-    let verification = fieldsVerification(studentInfo, StudentsModel.getAttributes());
+    let verification = fieldsVerification("POST", studentInfo, StudentsModel.getAttributes());
 
     if (verification.error) {
         res.status(500).json(verification);
@@ -38,5 +38,30 @@ Students.get("/getStudents", (req, res) => {
             }
         })
 });
+
+Students.put("/editStudent", (req, res) => {
+
+    let infoToEdit = req.body;
+    let { student_id } = infoToEdit;
+
+    if (student_id) {
+        delete infoToEdit.student_id;
+        
+        let verification = fieldsVerification("PUT", infoToEdit, StudentsModel.getAttributes());
+        if (verification.error) {
+            res.status(500).json(verification)
+        } else {
+            StudentsModel.update(infoToEdit, { where: { student_id } }).then( studentData => {
+                res.status(201).json({ done: true });
+            }).catch( err => {
+                res.status(500).json({ done: false, err })
+            });
+        }
+
+    } else {
+        res.status(500).json({ "error": "student_id required" })
+    }
+
+})
 
 module.exports = Students;
