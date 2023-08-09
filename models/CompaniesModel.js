@@ -18,11 +18,11 @@ const CompaniesModel = Database.define("companies", {
         type: STRING,
         allowNull: false
     },
-    company_contact: {
+    company_contact_email: {
         type: STRING,
         allowNull: false
     },
-    company_register: {
+    company_cnpj: {
         type: STRING(14),
         allowNull: false
     },
