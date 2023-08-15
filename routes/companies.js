@@ -3,23 +3,54 @@ const fieldsVerification = require("../src/tools/fieldsVerification");
 
 const { Router } = require("express");
 
-const CompaniesModel = require("../models/CompaniesModel.js")
+const CompaniesModel = require("../models/CompaniesModel.js");
+const CompaniesAddressModel = require("../models/CompaniesAddressModel.js");
 
 const CompaniesRouter = Router();
 
 CompaniesRouter.post("/createCompany", (req, res) => {
-    let { company_cnpj } = req.body;
+    let {
 
-    let verification = fieldsVerification("POST", req.body, CompaniesModel.getAttributes());
+        company_name,
+        company_contact_email,
+        company_cnpj,
+        company_contact_telephone,
+        company_cep,
+        company_street,
+        company_address_number,
+        company_district,
+        company_city,
+        company_state
 
-    if (verification.error) {
-        res.status(500).json(verification);
+    } = req.body;
+
+    let companyInfoVerification = fieldsVerification("POST", req.body, CompaniesModel.getAttributes());
+    let companyAddressVerification = fieldsVerification("POST", req.body, CompaniesAddressModel.getAttributes());
+
+    if (companyInfoVerification.error) {
+        res.status(500).json(companyInfoVerification);
+    } else if (companyAddressVerification.error) {
+        res.status(500).json(companyAddressVerification)
     } else {
-        CompaniesModel.findOrCreate({ where: { company_cnpj }, defaults: req.body })
+        CompaniesModel.findOrCreate({ where: { company_cnpj }, defaults: { company_name, company_contact_email, company_cnpj, company_contact_telephone } })
             .then(companyData => {
                 let [companyInfo, created] = companyData;
 
-                res.status(201).json({ companyInfo, created });
+                if (created) {
+                    //TODO Melhoria na Tratativa de erros cadastro endereço
+                    CompaniesAddressModel.create({
+                        company_id: companyInfo.getDataValue("company_id"),
+                        company_cep,
+                        company_street,
+                        company_address_number,
+                        company_district,
+                        company_city,
+                        company_state
+                    })
+
+                }
+
+                res.status(201).json({ created });
             })
             .catch(err => {
                 res.status(500).send(err)

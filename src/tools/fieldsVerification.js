@@ -7,7 +7,7 @@ module.exports = (requisitionType, information, modelAttributes) => {
 
     if (requisitionType === "POST") {
         for (let field of Object.keys(modelAttributes)) {
-            if (!["updatedAt", "createdAt"].includes(field) && !modelAttributes[field].primaryKey) {
+            if (!["updatedAt", "createdAt"].includes(field) && !modelAttributes[field].primaryKey && !modelAttributes[field].references) {
                 if (!modelAttributes[field].allowNull && !!information[field]) {
                     let { type } = modelAttributes[field];
 

@@ -13,10 +13,6 @@ const CompaniesModel = Database.define("companies", {
     company_name: {
         type: STRING,
         allowNull: false,
-    }, 
-    company_address: {
-        type: STRING,
-        allowNull: false
     },
     company_contact_email: {
         type: STRING,
@@ -26,12 +22,12 @@ const CompaniesModel = Database.define("companies", {
         type: STRING(14),
         allowNull: false
     },
-    company_telephone: {
+    company_contact_telephone: {
         type: STRING(11),
         allowNull: false
     }
 });
 
-Database.sync()
+Database.sync();
 
 module.exports = CompaniesModel;
