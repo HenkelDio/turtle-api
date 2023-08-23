@@ -21,7 +21,7 @@ const Students = Database.define("students", {
         allowNull: false
     },
     student_cellphone: {
-        type: STRING(11),
+        type: STRING(13),
         allowNull: false
     },
     student_email: {

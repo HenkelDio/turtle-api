@@ -23,7 +23,7 @@ const CompaniesModel = Database.define("companies", {
         allowNull: false
     },
     company_contact_telephone: {
-        type: STRING(11),
+        type: STRING(13),
         allowNull: false
     }
 });
